@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="banner">
+                <div class="banner-text">
+                    <h1>The ToDo's</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <h4>New Task</h4><br>
+            <form method="POST" class="p-3 shadow">
+            {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="label" placeholder="Label" class="border-2 form-control"><br>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="priority" placeholder="Priority" class="border-2 form-control"><br>
+                </div>
+                <div class="form-group">
+                    <input type="date" name="tdate" class="border-2 form-control"><br>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary form-control" type="submit" value="Add Task">
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-5">
+            <h4>Pending tasks!</h4><br>
+            {% for i in ta %}
+            <div class="card shadow" style="background-image:linear-gradient(to right, rgba(128,128,128,0), rgba(128,128,128,0.4)">
+                <div class="card-body">
+                    Task<br>
+                    <p class="card-text"><b>{{i.label}}</b></p>
+                    Priority<br>
+                    <p><b>{{i.priority}}</b></p>
+                    Date<br>
+                    <p><b>{{i.tdate}}</b></p><br>
+                    <a class="btn btn-danger form-control" href="{% url 'todoapp:delet' i.id  %}" style="width:49%;"><b>Delete</b></a>
+                    <a class="btn btn-success form-control" href="{% url 'todoapp:update' i.id  %}" style="width:49%;"><b>Update</b></a>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+<!--    {% for i in ta %}-->
+<!--        {{i.label}}<br>-->
+<!--        {{i.priority}}<br>-->
+<!--        {% endfor %}-->
+    </div>
+</div>
+{% endblock %}
